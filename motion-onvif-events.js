@@ -47,9 +47,14 @@ class Monitor {
   }
 
   onEventReceived(camMessage) {
-    const topic = camMessage.topic._;
-    if (topic.match(/RuleEngine\/CellMotionDetector\/Motion$/)) {
-      this.onMotionDetectedEvent(camMessage);
+    try {
+      const topic = camMessage.topic._;
+      if (topic.match(/RuleEngine\/CellMotionDetector\/Motion$/)) {
+        this.onMotionDetectedEvent(camMessage);
+      }
+    } catch (e) {
+      this.log('Error processing message. Error: ', e);
+      this.log("Message: ", camMessage);
     }
   }
 
